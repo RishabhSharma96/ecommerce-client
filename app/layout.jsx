@@ -1,6 +1,7 @@
 'use client'
 
 import Navbar from "@components/Navbar"
+import { CartContextProvider } from "@context/CartContext"
 import "@styles/globals.css"
 import { createGlobalStyle } from "styled-components"
 
@@ -18,8 +19,10 @@ const RootLayout = ({ className, children }) => {
             <GlobalStyles />
             <body>
                 <div className='overflow-hidden'>
-                    <Navbar />
-                    {children}
+                    <CartContextProvider>
+                        <Navbar />
+                        {children}
+                    </CartContextProvider>
                 </div>
             </body>
         </html>

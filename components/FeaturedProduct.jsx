@@ -1,10 +1,11 @@
+import { CartContext } from "@context/CartContext"
 import axios from "axios"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 
 const FeaturedProduct = () => {
 
-    const [featuredProductData , setFeaturedProductData] = useState({})
+    const [featuredProductData, setFeaturedProductData] = useState({})
     const [image, setimage] = useState('')
     const router = useRouter()
 
@@ -19,7 +20,13 @@ const FeaturedProduct = () => {
             })
         }
         getData()
-    },[])
+    }, [])
+
+    const { setCartProducts } = useContext(CartContext)
+
+    const addToCart = () => {
+        setCartProducts(prev => [...prev, featuredProductData._id])
+    }
 
     return (
         <div>
@@ -29,14 +36,14 @@ const FeaturedProduct = () => {
                         <span>⭐</span> <span>{featuredProductData.productName}</span>
                     </div>
                     <div className="xl:p-6 xl:pl-0 pt-4 text-[1.1rem] text-pink-200 flex text-center xl:text-left">
-                        {featuredProductData.productDescription?.slice(0,250) +"..."}
+                        {featuredProductData.productDescription?.slice(0, 250) + "..."}
                     </div>
                     <div className="flex flex-col sm:flex-row gap-4 mt-3 md:mt-0">
 
                         <button onClick={() => router.push(`/products/${featuredProductData._id}`)} className="h-[2.4rem] w-[150px] rounded-xl font-bold border-2 hover:bg-white hover:text-black ease-in-out duration-300">
                             Read More
                         </button>
-                        <button className="h-[2.4rem] w-[150px] bg-white text-black rounded-xl ease-in-out duration-300  font-bold flex justify-center items-center gap-3">
+                        <button onClick={addToCart} className="h-[2.4rem] w-[150px] bg-white text-black rounded-xl ease-in-out duration-300  font-bold flex justify-center items-center gap-3">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mt-[-3px]">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                             </svg>
