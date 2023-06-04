@@ -9,9 +9,9 @@ export const POST = async (req) => {
     try {
         await connectToDB()
         const { name, pin, city, email, address, country, products } = await req.json()
-
         const productIds = products.split(",")
         const uniqueIds = [...new Set(productIds)]
+        console.log(uniqueIds)
         const productsInfo = await Product.find({ _id: uniqueIds })
 
         let line_items = []
@@ -47,8 +47,8 @@ export const POST = async (req) => {
             line_items,
             mode: "payment",
             customer_email: email,
-            success_url: process.env.SUCCESS_URL + "/payment?success=1",
-            cancel_url: process.env.SUCCESS_URL + "/payment?cancelled=1",
+            success_url: process.env.SUCCESS_URL + "/payment/success",
+            cancel_url: process.env.SUCCESS_URL + "/payment/cancelled?id=" + newOrder._id,
             metadata: {
                 orderId: newOrder._id.toString()
             }

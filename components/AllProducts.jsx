@@ -1,12 +1,16 @@
+'use client'
+
 import { CartContext } from "@context/CartContext"
 import axios from "axios"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useContext, useEffect, useState } from "react"
 
 const AllProducts = () => {
 
     const [productsdata, setproductsdata] = useState([])
+    const [search, setsearch] = useState("")
     const router = useRouter()
+    const pathname = usePathname()
 
     useEffect(() => {
         const getData = async () => {
@@ -28,9 +32,14 @@ const AllProducts = () => {
 
     return (
         <div className="flex items-center flex-col pt-6">
-            <span className="font-extrabold text-4xl text-blue-900">New Arrivals</span>
+            <span className="font-extrabold text-4xl text-blue-900"> {pathname === "/" ? "New Arrivals" : "Deal Busters"} </span>
+            {pathname === "/products" ? (
+                <div className="w-full flex items-center justify-center p-8 pb-3 ">
+                    <input className=" pl-6 min-w-[300px] w-[30%] h-[2.5rem] rounded-xl focus:outline-none border-2 border-gray-300" type="text" value={search} onChange={(e) => setsearch(e.target.value)} placeholder="Search Products" />
+                </div>
+            ) : ""}
             <div className="flex flex-wrap gap-3 items-center justify-center pt-10 pb-10 ">
-                {productsdata.length > 0 && productsdata.map((product) => {
+                {productsdata.length > 0 && productsdata.filter(pdt => pdt.productName.toLowerCase().includes(search)).map((product) => {
                     return (
                         <div className="h-[320px] w-[320px] flex flex-col items-center justify-center rounded-2xl pb-3 bg-gray-100">
 

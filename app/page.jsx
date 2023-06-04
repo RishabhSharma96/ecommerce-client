@@ -5,6 +5,7 @@ import FeaturedProduct from '@components/FeaturedProduct'
 import React from 'react'
 
 const Page = () => {
+    
     return (
         <div>
             <div>
