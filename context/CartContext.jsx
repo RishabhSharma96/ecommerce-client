@@ -8,15 +8,22 @@ export function CartContextProvider({ children }) {
     const [cartProducts, setCartProducts] = useState([]);
 
     useEffect(() => {
-        if (cartProducts?.length > 0) {
-            ls?.setItem('cart', JSON.stringify(cartProducts));
+
+        const setCartItem = () => {
+            if (cartProducts?.length > 0) {
+                ls?.setItem('cart', JSON.stringify(cartProducts));
+            }
         }
+        setCartItem()
     }, [cartProducts]);
 
     useEffect(() => {
-        if (ls && ls?.getItem('cart')) {
-            setCartProducts(JSON.parse(ls?.getItem('cart')));
+        const getCartItem = () => {
+            if (ls && ls?.getItem('cart')) {
+                setCartProducts(JSON.parse(ls?.getItem('cart')));
+            }
         }
+        getCartItem()
     }, []);
 
     return (
