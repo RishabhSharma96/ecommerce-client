@@ -12,8 +12,9 @@ const Page = () => {
     const searchParams = useSearchParams()
     const success = searchParams.get('success')
     const failure = searchParams.get('cancelled')
-
     const { cartProducts, setCartProducts } = useContext(CartContext)
+    const [shippingPrice, setShippingPrice] = useState(0)
+
     const [productsData, setProductsdata] = useState([])
     const [userData, setUserData] = useState({
         name: "",
@@ -38,6 +39,15 @@ const Page = () => {
         })
     }
 
+    var price = 0
+    const getPrice = () => {
+        price = 0
+        productsData.map((items) =>
+            price += items.productPrice * cartProducts.filter(id => id === items._id).length
+        )
+        return price
+    }
+
     useEffect(() => {
 
         const getCartProducts = async () => {
@@ -55,6 +65,28 @@ const Page = () => {
         getCartProducts()
     }, [cartProducts])
 
+    useEffect(() => {
+        getPrice()
+    }, [cartProducts])
+
+    useEffect(() => {
+
+        const getShippingPrice = async () => {
+            await axios.get("/api/shipping").then((response) => {
+                console.log(response.data[0].shippingPrice)
+                setShippingPrice(response.data[0].shippingPrice)
+            }).catch((err) => {
+                console.log(err.message)
+            })
+        }
+        getShippingPrice()
+    }, [])
+
+    useEffect(() => {
+        getPrice()
+    }, [cartProducts])
+
+
     const handleCheckkout = async () => {
         const ids = cartProducts.join(",")
 
@@ -71,6 +103,11 @@ const Page = () => {
         }).catch((err) => {
             console.log(err.message)
         })
+    }
+
+    const emptyCart = () => {
+        setCartProducts([])
+        localStorage.removeItem('cart')
     }
 
     return (
@@ -121,8 +158,18 @@ const Page = () => {
                         )
                     })}
 
+
+                    <div className="flex flex-col text-xl items-center justify-center text-blue-800">
+                        <span>Items Price : {getPrice()}</span>
+                        <span>Shipping Price : {shippingPrice}</span>
+                        <span className="font-bold text-blue-950">Grand Total : {getPrice() + shippingPrice}</span>
+                    </div>
+                    <div>
+                        <button onClick={emptyCart} className="w-[320px] h-[2.4rem] bg-blue-950 text-white font-bold rounded-xl hover:border hover:border-blue-950 hover:text-blue-950 hover:bg-white ease-linear duration-300 mt-2">Clear Cart</button>
+                    </div>
+
                 </div>)}
-                <div className="bg-gray-200 flex flex-col items-center justify-center w-[95%] md:w-[40%] min-w-[320px] p-10 gap-1 rounded-xl h-[30rem]">
+                <div className="bg-gray-200 flex flex-col items-center justify-center w-[95%] md:w-[40%] min-w-[320px] p-10 pb-6 gap-1 rounded-xl h-[30rem]">
                     <span className="text-blue-950 font-extrabold text-3xl mb-7">Order Details</span>
                     <input
                         type="text"
@@ -173,8 +220,8 @@ const Page = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 ">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
                         </svg>
-
                     </button>
+
                 </div>
             </div>
         </div>
