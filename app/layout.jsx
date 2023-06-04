@@ -3,6 +3,7 @@
 import Navbar from "@components/Navbar"
 import { CartContextProvider } from "@context/CartContext"
 import "@styles/globals.css"
+import { usePathname } from "next/navigation"
 import { createGlobalStyle } from "styled-components"
 
 const GlobalStyles = createGlobalStyle`
@@ -14,13 +15,16 @@ const GlobalStyles = createGlobalStyle`
 `
 
 const RootLayout = ({ className, children }) => {
+
+    const pathname = usePathname()
+
     return (
         <html>
             <GlobalStyles />
             <body>
                 <div className='overflow-hidden'>
                     <CartContextProvider>
-                        <Navbar />
+                        {pathname === "/login" || pathname === '/register' ? "" : <Navbar />}
                         {children}
                     </CartContextProvider>
                 </div>
