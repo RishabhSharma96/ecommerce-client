@@ -52,7 +52,7 @@ const FeaturedProduct = () => {
                     </div>
                 </div>
                 <div >
-                    <img className="mb-3 bg-transparent h-[300px] w-[300px] mt-5 md:mt-0 object-contain rounded-xl mix-blend-lighten" src={image} alt="featured-product-image" />
+                    <img className="mb-3 bg-transparent h-[300px] w-[300px] mt-5 md:mt-0 object-contain rounded-xl" src={image} alt="featured-product-image" />
                 </div>
             </div>
         </div>

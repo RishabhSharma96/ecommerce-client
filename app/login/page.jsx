@@ -61,7 +61,7 @@ const Page = () => {
                         placeholder='Enter password'
                     />
                     <button onClick={handleLogin} className="w-[95%] md:w-[80%] bg-blue-950 text-white font-bold h-[2.5rem] rounded-xl hover:border  hover:border-blue-950 hover:text-blue-950 hover:bg-white ease-in-out duration-300 flex justify-center items-center gap-4 hover:gap-7">Login</button>
-                    <button className="w-[95%] md:w-[80%] bg-blue-950 text-white font-bold h-[2.5rem] rounded-xl hover:border  hover:border-blue-950 hover:text-blue-950 hover:bg-white ease-in-out duration-300 flex justify-center items-center gap-4 hover:gap-7">Admin Login</button>
+                    <a className='w-[95%] md:w-[80%] bg-blue-950 text-white font-bold h-[2.5rem] rounded-xl hover:border  hover:border-blue-950 hover:text-blue-950 hover:bg-white ease-in-out duration-300 flex justify-center items-center gap-4 hover:gap-7' href ="http://admin-shopit-rishabhsharma.vercel.app" ><button  className="w-[100%] md:w-[100%] bg-blue-950 text-white font-bold h-[2.5rem] rounded-xl hover:border  hover:border-blue-950 hover:text-blue-950 hover:bg-white ease-in-out duration-300 flex justify-center items-center gap-4 hover:gap-7">Admin Login</button></a>
                     <span className='font-bold text-gray-500'>New Here? <span className='text-blue-600 cursor-pointer' onClick={() => router.push("/register")}>Register</span></span>
                 </div>
 

@@ -16,9 +16,23 @@ const Page = () => {
     const [shippingPrice, setShippingPrice] = useState(0)
 
     const [productsData, setProductsdata] = useState([])
+    const [fetchedUserData, setFetchedUserData] = useState([])
+
+    const id = localStorage.getItem("userId")
+
+    useEffect(() => {
+        const getData = async () => {
+            await axios.get("/api/customer/" + id).then((response) => {
+                setFetchedUserData(response.data[0])
+            }).catch((err) => {
+                console.log(err.message)
+            })
+        }
+        getData()
+    }, [])
+
     const [userData, setUserData] = useState({
         name: "",
-        email: "",
         city: "",
         pin: "",
         address: "",
@@ -92,7 +106,7 @@ const Page = () => {
 
         await axios.post("/api/checkout", {
             name: userData.name,
-            email: userData.email,
+            email: fetchedUserData.email,
             pin: userData.pin,
             city: userData.city,
             address: userData.address,
@@ -110,6 +124,8 @@ const Page = () => {
         localStorage.removeItem('cart')
     }
 
+
+
     if (!localStorage.getItem('token')) {
         router.push("/login")
     }
@@ -124,7 +140,7 @@ const Page = () => {
                         </div>
                     )}
                     {cartProducts.length > 0 && (<div className="bg-gray-200 flex flex-col items-center justify-center w-[95%] md:w-[50%] min-w-[315px] p-2 pt-10 pb-10 md:p-6 md:pt-10 gap-1 rounded-xl">
-
+                        <span className="text-blue-950 font-extrabold text-3xl mb-7">Cart</span>
                         <div className="flex items-center justify-center w-[95%] text-blue-950 font-extrabold text-xl mb-[1rem]">
                             <div className="w-[40%] flex items-center justify-center">
                                 <div>
@@ -185,15 +201,14 @@ const Page = () => {
                         />
                         <input
                             type="email"
-                            value={userData.email}
-                            onChange={(e) => setUserData({ ...userData, email: e.target.value })}
-                            placeholder="Enter Your Email"
+                            value={fetchedUserData.email}
                             className="border-2 border-gray-400 rounded-xl w-[95%] md:w-[80%] m-1 pl-3 h-[2.2rem] focus:outline-none"
                         />
                         <div className="w-[100%] flex items-center justify-center">
                             <input
                                 type="text"
                                 value={userData.city}
+                                contentEditable
                                 onChange={(e) => setUserData({ ...userData, city: e.target.value })}
                                 placeholder="Enter City"
                                 className="border-2 border-gray-400 rounded-xl w-[47%] md:w-[39%] m-1 pl-3 h-[2.2rem] focus:outline-none"
