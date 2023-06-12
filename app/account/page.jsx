@@ -151,13 +151,13 @@ const Page = () => {
 
                             {orders.length > 0 && orders.map((product) => {
                                 return (
-                                    <div className="flex items-center justify-center w-[95%] mb-[1rem]">
+                                    <div key={product._id} className="flex items-center justify-center w-[95%] mb-[1rem]">
                                         <div className="w-[45%] xl:w-[40%] items-center justify-center">
                                             <div className="bg-blend-multiply flex flex-col items-center justify-center mb-1 text-lg gap-1">
 
                                                 {product.line_items.map((item) => {
                                                     return (
-                                                        <span>{item.quantity} x {item.price_data.product_data.name}</span>
+                                                        <span key={item.quantity * item.price_data.product_data.name} >{item.quantity} x {item.price_data.product_data.name}</span>
                                                     )
                                                 })
                                                 }

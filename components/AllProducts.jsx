@@ -59,7 +59,7 @@ const AllProducts = () => {
                 <div className="flex flex-wrap gap-3 items-center justify-center pt-10 pb-10 ">
                     {productsdata.length > 0 && productsdata.filter(pdt => pdt.productName.toLowerCase().includes(search)).map((product,index) => {
                         return (
-                            <motion.div
+                            <motion.div key={product._id}
                                 transition={{ duration: 0.8 }}
                                 initial={{ opacity: 0, x: "+400px" }}
                                 animate={{ opacity: 1, x: "0px" }}

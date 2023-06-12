@@ -6,6 +6,7 @@ import "@styles/globals.css"
 import { usePathname } from "next/navigation"
 import { createGlobalStyle } from "styled-components"
 import { Toaster } from "react-hot-toast"
+import Head from "next/head"
 
 const GlobalStyles = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
@@ -15,10 +16,6 @@ const GlobalStyles = createGlobalStyle`
 }
 `
 
-export const metadata = {
-    title: "Shop-It"
-}
-
 const RootLayout = ({ className, children }) => {
 
     const pathname = usePathname()
@@ -26,6 +23,9 @@ const RootLayout = ({ className, children }) => {
     return (
         <html>
             <GlobalStyles />
+            <head>
+                    <title>Shop-IT Ecommerce</title>
+                </head>
             <body>
                 <div className='overflow-hidden'>
                     <CartContextProvider>

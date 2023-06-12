@@ -70,7 +70,7 @@ const Page = () => {
                     <div className="flex item-center flex-wrap flex-row w-full justify-center pt-2 pb-4 mb-2 gap-3 bg-blue-950 mt-[-17px]">
                         {categoryData.length > 0 && categoryData.map((category) => {
                             return (
-                                <span onClick={() => {
+                                <span key={category._id} onClick={() => {
                                     setfilterCategory(category.categoryName)
                                     console.log(filterCategory)
                                 }} className="bg-white text-blue-950 pl-3 pr-3 rounded-md cursor-pointer font-bold flex gap-2">
@@ -96,7 +96,7 @@ const Page = () => {
                 <div>
                     {categoryData.length > 0 && categoryData.filter(ct => ct.categoryName.includes(filterCategory)).map((category) => {
                         return (
-                            <div>
+                            <div key={category._id}>
                                 <div className="text-blue-950 font-extrabold text-3xl flex gap-3 items-center justify-center md:ml-6 md:justify-normal mt-6">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5l-3.9 19.5m-2.1-19.5l-3.9 19.5" />

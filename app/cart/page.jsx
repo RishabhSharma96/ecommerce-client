@@ -202,7 +202,7 @@ const Page = () => {
 
                             {productsData.length > 0 && productsData.map((product) => {
                                 return (
-                                    <div className="flex items-center justify-center w-[95%] mb-[1rem]">
+                                    <div key={product._id} className="flex items-center justify-center w-[95%] mb-[1rem]">
                                         <div className="w-[40%] items-center justify-center">
                                             <div className="bg-blend-multiply flex items-center justify-center mb-1">
                                                 <img className="h-32 w-32 bg-blend-multiply" src={product.productImages[0]} alt="" />
