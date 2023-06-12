@@ -21,19 +21,20 @@ const Page = () => {
 
     if (typeof window !== 'undefined') {
         id = localStorage.getItem("userId")
-
-        useEffect(() => {
-            const getData = async () => {
-                await axios.get("/api/customer/" + id).then((response) => {
-                    setUserData(response.data[0])
-                }).catch((err) => {
-                    console.log(err.message)
-                })
-            }
-            getData()
-        }, [])
-
     }
+
+    const getData = async () => {
+        await axios.get("/api/customer/" + id).then((response) => {
+            setUserData(response.data[0])
+        }).catch((err) => {
+            console.log(err.message)
+        })
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
     const getOrders = async () => {
         await axios.post("/api/orders", {
             email: userData.email
@@ -97,9 +98,13 @@ const Page = () => {
         })
     }
 
+    let token = null;
+    if (typeof window !== 'undefined') {
+        token = localStorage.getItem('token')
+    }
 
 
-    if (!localStorage.getItem('token')) {
+    if (!token) {
         router.push("/login")
     }
 

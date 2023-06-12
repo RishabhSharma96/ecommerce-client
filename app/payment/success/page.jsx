@@ -22,7 +22,13 @@ const Page = () => {
         emptyCart()
     }, [])
 
-    if (!localStorage.getItem('token')) {
+    let token = null;
+    if (typeof window !== 'undefined') {
+        token = localStorage.getItem('token')
+    }
+
+
+    if (!token) {
         router.push("/login")
     }
     else {
