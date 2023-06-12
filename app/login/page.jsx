@@ -5,6 +5,8 @@ import login from "@public/login.png"
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import { motion } from 'framer-motion'
+import { toast } from 'react-hot-toast'
 
 const Page = () => {
 
@@ -14,16 +16,24 @@ const Page = () => {
     const [password, setPassword] = useState("")
 
     const handleLogin = async () => {
+
+        if(!email && !password){
+            toast.error("Please fill all fields")
+            return ;
+        }
+
         await axios.post("/api/login", {
             email,
             password
         }).then((response) => {
             if (response.data.token) {
                 router.push("/")
+                toast.success("Login Successful!")
                 localStorage.setItem('token', response.data.token)
                 localStorage.setItem('userId', response.data.user[0]._id)
             }
         }).catch((err) => {
+            toast.error("Credentials didn't match")
             console.log(err.message)
         })
     }
@@ -32,10 +42,20 @@ const Page = () => {
         <div>
             <div className='flex w-full h-full justify-center items-center md:ml-[-50px]'>
 
-                <div className='hidden md:flex h-screen justify-center items-center'>
+                <motion.div
+                    transition={{ duration: 0.8 }}
+                    initial={{ opacity: 0, x: "-400px" }}
+                    animate={{ opacity: 1, x: "0px" }}
+                    exit={{ opacity: 0, x: "-400px" }}
+                    className='hidden md:flex h-screen justify-center items-center'>
                     <Image src={login} height={1000} width={1000}></Image>
-                </div>
-                <div className='mt-20 md:mt-0 h-full flex flex-col justify-center items-center gap-3 p-10'>
+                </motion.div>
+                <motion.div 
+                transition={{ duration: 0.8 }}
+                initial={{ opacity: 0, x: "+400px" }}
+                animate={{ opacity: 1, x: "0px" }}
+                exit={{ opacity: 0, x: "+400px" }}
+                className='mt-20 md:mt-0 h-full flex flex-col justify-center items-center gap-3 p-10'>
                     <span className="text-blue-950 font-extrabold text-3xl mb-7">Shop-It Login</span>
                     <span className='flex gap-3'>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -61,9 +81,9 @@ const Page = () => {
                         placeholder='Enter password'
                     />
                     <button onClick={handleLogin} className="w-[95%] md:w-[80%] bg-blue-950 text-white font-bold h-[2.5rem] rounded-xl hover:border  hover:border-blue-950 hover:text-blue-950 hover:bg-white ease-in-out duration-300 flex justify-center items-center gap-4 hover:gap-7">Login</button>
-                    <a className='w-[95%] md:w-[80%] bg-blue-950 text-white font-bold h-[2.5rem] rounded-xl hover:border  hover:border-blue-950 hover:text-blue-950 hover:bg-white ease-in-out duration-300 flex justify-center items-center gap-4 hover:gap-7' href ="http://admin-shopit-rishabhsharma.vercel.app" ><button  className="w-[100%] md:w-[100%] bg-blue-950 text-white font-bold h-[2.5rem] rounded-xl hover:border  hover:border-blue-950 hover:text-blue-950 hover:bg-white ease-in-out duration-300 flex justify-center items-center gap-4 hover:gap-7">Admin Login</button></a>
+                    <a className='w-[95%] md:w-[80%] bg-blue-950 text-white font-bold h-[2.5rem] rounded-xl hover:border  hover:border-blue-950 hover:text-blue-950 hover:bg-white ease-in-out duration-300 flex justify-center items-center gap-4 hover:gap-7' href="http://admin-shopit-rishabhsharma.vercel.app" ><button className="w-[100%] md:w-[100%] bg-blue-950 text-white font-bold h-[2.5rem] rounded-xl hover:border  hover:border-blue-950 hover:text-blue-950 hover:bg-white ease-in-out duration-300 flex justify-center items-center gap-4 hover:gap-7">Admin Login</button></a>
                     <span className='font-bold text-gray-500'>New Here? <span className='text-blue-600 cursor-pointer' onClick={() => router.push("/register")}>Register</span></span>
-                </div>
+                </motion.div>
 
             </div>
         </div>

@@ -5,6 +5,7 @@ import { CartContextProvider } from "@context/CartContext"
 import "@styles/globals.css"
 import { usePathname } from "next/navigation"
 import { createGlobalStyle } from "styled-components"
+import { Toaster } from "react-hot-toast"
 
 const GlobalStyles = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
@@ -13,6 +14,10 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'Poppins', sans-serif;
 }
 `
+
+export const metadata = {
+    title: "Shop-It"
+}
 
 const RootLayout = ({ className, children }) => {
 
@@ -24,6 +29,9 @@ const RootLayout = ({ className, children }) => {
             <body>
                 <div className='overflow-hidden'>
                     <CartContextProvider>
+                        <Toaster
+                            position="top-right"
+                        />
                         {pathname === "/login" || pathname === '/register' ? "" : <Navbar />}
                         {children}
                     </CartContextProvider>

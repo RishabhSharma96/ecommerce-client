@@ -4,6 +4,7 @@ import React, { useContext, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { CartContext } from '@context/CartContext'
 import axios from 'axios'
+import { toast } from 'react-hot-toast'
 
 const Page = () => {
 
@@ -11,6 +12,10 @@ const Page = () => {
     const router = useRouter()
 
     const id = searchParams.get('id')
+
+    useEffect(()=>{
+        toast.error("Payment Failed")
+    },[])
 
     useEffect(() => {
         const deleteItem = async () => {

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from "next/navigation"
 import { useContext, useState } from 'react';
 import { CartContext } from '@context/CartContext';
+import { motion } from 'framer-motion';
 
 const StyledNavbar = styled.div`
     width: 100vw;

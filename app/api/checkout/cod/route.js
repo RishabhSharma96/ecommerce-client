@@ -1,8 +1,6 @@
 import Product from "@models/product";
 import Order from "@models/order";
 import { connectToDB } from "@utils/database";
-import Stripe from 'stripe';
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const POST = async (req) => {
 
@@ -40,23 +38,10 @@ export const POST = async (req) => {
             email,
             address,
             country,
-            paid: true
+            paid: false
         })
 
-        const session = await stripe.checkout.sessions.create({
-            line_items,
-            mode: "payment",
-            customer_email: email,
-            success_url: process.env.SUCCESS_URL + "/payment/success",
-            cancel_url: process.env.SUCCESS_URL + "/payment/cancelled?id=" + newOrder._id,
-            metadata: {
-                orderId: newOrder._id.toString()
-            }
-        })
-
-        const url = session.url
-
-        return new Response(JSON.stringify(url), { status: 201 })
+        return new Response(JSON.stringify(newOrder), { status: 201 })
 
     }
     catch (err) {

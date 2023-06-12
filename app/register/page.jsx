@@ -5,6 +5,8 @@ import login from "@public/register.png"
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import { motion } from 'framer-motion'
+import { toast } from 'react-hot-toast'
 
 const Page = () => {
 
@@ -16,6 +18,12 @@ const Page = () => {
   const [address, setAddress] = useState("")
 
   const handleRegister = async () => {
+
+    if(!email && !password && !phone && !address){
+      toast.error("Please fill all Credentials")
+      return;
+    }
+
     await axios.post("/api/register", {
       email,
       password,
@@ -24,7 +32,9 @@ const Page = () => {
     }).then((response) => {
       console.log(response)
       router.push("/login")
+      toast.success("Account Created")
     }).catch((err) => {
+      toast.error(err.message)
       console.log(err.message)
     })
   }
@@ -33,10 +43,20 @@ const Page = () => {
     <div>
       <div className='flex w-full h-full justify-center items-center md:ml-[-50px]'>
 
-        <div className='hidden md:flex h-screen justify-center items-center'>
+        <motion.div
+          transition={{ duration: 0.8 }}
+          initial={{ opacity: 0, x: "-400px" }}
+          animate={{ opacity: 1, x: "0px" }}
+          exit={{ opacity: 0, x: "-400px" }}
+          className='hidden md:flex h-screen justify-center items-center'>
           <Image src={login} height={1000} width={1000}></Image>
-        </div>
-        <div className='mt-10 md:mt-0 h-full flex flex-col justify-center items-center gap-3 p-10'>
+        </motion.div>
+        <motion.div 
+        transition={{ duration: 0.8 }}
+        initial={{ opacity: 0, x: "+400px" }}
+        animate={{ opacity: 1, x: "0px" }}
+        exit={{ opacity: 0, x: "+400px" }}
+        className='mt-10 md:mt-0 h-full flex flex-col justify-center items-center gap-3 p-10'>
           <span className="text-blue-950 font-extrabold text-3xl mb-7 p-[-100px]">Shop-It Register</span>
           <span className='flex gap-3'>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -97,7 +117,7 @@ const Page = () => {
           <button onClick={handleRegister} className="w-[95%] md:w-[80%] bg-blue-950 text-white font-bold h-[2.5rem] rounded-xl hover:border  hover:border-blue-950 hover:text-blue-950 hover:bg-white ease-in-out duration-300 flex justify-center items-center gap-4 hover:gap-7">Register</button>
 
           <span className='font-bold text-gray-500'>Have an account? <span className='text-blue-600 cursor-pointer' onClick={() => router.push("/login")}>Login</span></span>
-        </div>
+        </motion.div>
 
       </div>
     </div>

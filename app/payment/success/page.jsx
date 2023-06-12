@@ -3,11 +3,16 @@
 import React, { useContext, useEffect } from 'react'
 import { CartContext } from '@context/CartContext'
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-hot-toast'
 
 const Page = () => {
 
     const { setCartProducts } = useContext(CartContext)
     const router = useRouter()
+
+    useEffect(()=>{
+        toast.success("Order placed")
+    },[])
 
     useEffect(() => {
         const emptyCart = () => {
