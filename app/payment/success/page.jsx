@@ -28,10 +28,15 @@ const Page = () => {
     }
 
 
-    if (!token) {
-        router.push("/login")
-    }
-    else {
+    useEffect(() => {
+        const routeToLogin = () => {
+            if (!token) {
+                router.push("/login")
+            }
+        }
+        routeToLogin()
+    }, [])
+
         return (
             <div>
                 <div className='h-[90vh] w-full flex items-center justify-center overflow-hidden'>
@@ -48,7 +53,6 @@ const Page = () => {
                 </div>
             </div >
         )
-    }
 
 }
 

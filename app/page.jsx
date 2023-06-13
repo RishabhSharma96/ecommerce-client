@@ -15,22 +15,25 @@ const Page = () => {
         token = localStorage.getItem('token')
     }
 
-    if (!token) {
-        router.push("/login")
-    }
-    else {
-        return (
+    useEffect(() => {
+        const routeToLogin = () => {
+            if (!token) {
+                router.push("/login")
+            }
+        }
+        routeToLogin()
+    }, [])
+    return (
+        <div>
+            <head>
+                <title>Shop-IT Ecommerce</title>
+            </head>
             <div>
-                <head>
-                    <title>Shop-IT Ecommerce</title>
-                </head>
-                <div>
-                    <FeaturedProduct />
-                    <AllProducts />
-                </div>
+                <FeaturedProduct />
+                <AllProducts />
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default Page

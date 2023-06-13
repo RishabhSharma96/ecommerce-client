@@ -29,6 +29,11 @@ const Page = ({ params }) => {
     }, [])
 
     const AddComment = async () => {
+
+        if(!comment){
+            toast.error("Can't post empty review")
+        }
+
         console.log(productID)
         await axios.patch("/api/product/comment/" + productID, {
             comment: comment

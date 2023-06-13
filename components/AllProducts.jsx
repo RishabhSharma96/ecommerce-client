@@ -49,14 +49,14 @@ const AllProducts = () => {
                 initial={{ opacity: 0, y: "+400px" }}
                 animate={{ opacity: 1, y: "0px" }}
                 exit={{ opacity: 0, y: "+400px" }}
-                className="flex items-center flex-col pt-6">
-                <span className="font-extrabold text-4xl text-blue-900"> {pathname === "/" ? "New Arrivals" : "Deal Busters"} </span>
+                className="flex items-center flex-col pt-6 bg-gray-100">
+                <span className="font-extrabold text-4xl text-blue-900 bg-gray-100"> {pathname === "/" ? "New Arrivals" : "Deal Busters"} </span>
                 {pathname === "/products" ? (
                     <div className="w-full flex items-center justify-center p-8 pb-3 ">
                         <input className=" pl-6 min-w-[300px] w-[30%] h-[2.5rem] rounded-xl focus:outline-none border-2 border-gray-300" type="text" value={search} onChange={(e) => setsearch(e.target.value)} placeholder="Search Products" />
                     </div>
                 ) : ""}
-                <div className="flex flex-wrap gap-3 items-center justify-center pt-10 pb-10 ">
+                <div className="flex flex-wrap gap-3 items-center justify-center pt-10 pb-10  bg-gray-100">
                     {productsdata.length > 0 && productsdata.filter(pdt => pdt.productName.toLowerCase().includes(search)).map((product,index) => {
                         return (
                             <motion.div key={product._id}
@@ -64,7 +64,7 @@ const AllProducts = () => {
                                 initial={{ opacity: 0, x: "+400px" }}
                                 animate={{ opacity: 1, x: "0px" }}
                                 exit={{ opacity: 0, x: "-400px" }}
-                                className="h-[320px] w-[320px] flex flex-col items-center justify-center rounded-2xl pb-3 bg-gray-100">
+                                className="h-[320px] w-[320px] flex flex-col items-center justify-center rounded-2xl pb-3 bg-white">
 
                                 <div className="p-8 pt-3 pl-12 h-[320px] w-[320px] object-contain">
                                     <img className="h-[220px] w-[220px] object-contain rounded-2xl mix-blend-multiply" src={product.productImages[0]} alt="product-image" />

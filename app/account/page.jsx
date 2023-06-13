@@ -104,9 +104,14 @@ const Page = () => {
     }
 
 
-    if (!token) {
-        router.push("/login")
-    }
+    useEffect(() => {
+        const routeToLogin = () => {
+            if (!token) {
+                router.push("/login")
+            }
+        }
+        routeToLogin()
+    }, [])
 
     if (userData.length === 0) {
         return (

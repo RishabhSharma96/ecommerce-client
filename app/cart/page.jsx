@@ -157,11 +157,15 @@ const Page = () => {
     }
 
 
-    if (!token) {
-        router.push("/login")
-    }
+    useEffect(() => {
+        const routeToLogin = () => {
+            if (!token) {
+                router.push("/login")
+            }
+        }
+        routeToLogin()
+    }, [])
 
-    else {
         return (
             <div>
                 <div className="flex gap-4 justify-center ml-[2%] md:ml-0 mt-10 flex-col md:flex-row">
@@ -306,6 +310,5 @@ const Page = () => {
             </div>
         )
     }
-}
 
 export default Page

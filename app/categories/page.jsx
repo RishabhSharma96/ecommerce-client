@@ -52,9 +52,14 @@ const Page = () => {
     }
 
 
-    if (!token) {
-        router.push("/login")
-    }
+    useEffect(() => {
+        const routeToLogin = () => {
+            if (!token) {
+                router.push("/login")
+            }
+        }
+        routeToLogin()
+    }, [])
 
     if (productsdata.length === 0 && categoryData.length === 0) {
         return (
