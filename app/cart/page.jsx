@@ -5,6 +5,7 @@ import axios from "axios"
 import { motion } from "framer-motion"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useContext, useEffect, useState } from "react"
+import { toast } from "react-hot-toast"
 import { ScaleLoader } from "react-spinners"
 
 const Page = () => {
@@ -90,16 +91,16 @@ const Page = () => {
         getPrice()
     }, [cartProducts])
 
-    useEffect(() => {
+    const getShippingPrice = async () => {
+        await axios.get("/api/shipping").then((response) => {
+            console.log(response.data[0].shippingPrice)
+            setShippingPrice(response.data[0].shippingPrice)
+        }).catch((err) => {
+            console.log(err.message)
+        })
+    }
 
-        const getShippingPrice = async () => {
-            await axios.get("/api/shipping").then((response) => {
-                console.log(response.data[0].shippingPrice)
-                setShippingPrice(response.data[0].shippingPrice)
-            }).catch((err) => {
-                console.log(err.message)
-            })
-        }
+    useEffect(() => {
         getShippingPrice()
     }, [])
 
@@ -109,6 +110,12 @@ const Page = () => {
 
 
     const handleCheckkout = async () => {
+
+        if(!userData.name && !userData.address && !userData.email && !userData.city && !userData.pin){
+            toast.error("Please fill shipping details")
+            return ;
+        }
+
         const ids = cartProducts.join(",")
 
         await axios.post("/api/checkout", {
