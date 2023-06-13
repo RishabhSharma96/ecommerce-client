@@ -32,6 +32,7 @@ const Page = ({ params }) => {
 
         if(!comment){
             toast.error("Can't post empty review")
+            return ;
         }
 
         console.log(productID)
